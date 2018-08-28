@@ -38,14 +38,18 @@ auth()
     })
     .then(friends => {
     	console.log(friends);
+
     	const template = document.querySelector('#user-template').textContent;
-    	
+    	console.log(template);
+
     	const render = Handlebars.compile(template);
-    	
+    	console.log(render);
 
     	const renderFriends = render(friends.items);
+    	console.log(renderFriends);
 
-    	const vkFriendsList = document.querySelector('#vk-friends');    	
+    	const vkFriendsList = document.querySelector('#vk-friends');
+    	    	
     	vkFriendsList.innerHTML = renderFriends;
     })
 
