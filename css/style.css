@@ -1,0 +1,142 @@
+* {
+  padding: 0;
+  margin: 0;
+}
+ul {
+  list-style-type: none;
+}
+body {
+  font-family: 'Fira Sans';
+  background: #dac1ba;
+}
+.friends-filter__window {
+  position: absolute;
+  width: 621px;
+  height: 490px;
+  background: #fff;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 10px;
+  overflow: hidden;
+}
+.friends-filter__top {
+  background: #ff8663;
+  position: relative;
+}
+.friends-filter__top h1 {
+  font-size: 16px;
+  color: #fff;
+  padding: 13px 15px;
+  letter-spacing: 0.1px;
+}
+.friends-filter__top div {
+  position: absolute;
+  right: 14px;
+  top: 17px;
+  width: 14px;
+  height: 14px;
+  background: url(../img/close_btn.png);
+}
+.friends-filter__filters {
+  background: #f0f0f0;
+  display: flex;
+  justify-content: space-around;
+  padding: 10px 0px;
+}
+.friends-filter__filters input {
+  color: #9f9f9f;
+  font-size: 12px;
+  font-weight: 400;
+  border-radius: 20px;
+  outline: none;
+  border: none;
+  width: 285px;
+  padding: 6px 0px 6px 26px;
+  box-sizing: border-box;
+  background: #ffffff url(../img/search.png) 6px 6px no-repeat;
+}
+.friends-filter__lists {
+  display: flex;
+  margin: 0 15px;
+  background: #fff;
+  height: 355px;
+}
+.friends-filter__lists div h4 {
+  font-size: 12px;
+  font-weight: 600;
+  color: #4f4f4f;
+  padding-top: 11px;
+  padding-bottom: 5px;
+}
+.list {
+  width: 283px;
+  padding-right: 6px;
+  height: 325px;
+  overflow-y: auto;
+}
+.list:first-of-type {
+  margin-right: 16px;
+}
+.list__item {
+  display: flex;
+  align-items: center;
+  height: 57px;
+  border-bottom: 1px solid #f0f0f0;
+  font-size: 12px;
+  font-weight: 600;
+  color: #4f4f4f;
+  position: relative;
+}
+.list__item div > img {
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  margin-left: 6px;
+  margin-right: 7px;
+}
+.list__item:first-child {
+  border-top: 1px solid #f0f0f0;
+}
+.list::-webkit-scrollbar {
+  width: 3px;
+  position: relative;
+  right: 5px;
+}
+.list::-webkit-scrollbar-thumb {
+  background: #c4c4c4;
+  border-radius: 2px;
+}
+.friends-filter__bottom {
+  background: #f0f0f0;
+  height: 44px;
+  position: relative;
+}
+.friends-filter__bottom button {
+  font-size: 12px;
+  font-weight: 400;
+  color: #fff;
+  background: #ff8663;
+  padding: 8px 14px;
+  outline: none;
+  border: none;
+  position: absolute;
+  top: 7px;
+  right: 7px;
+  border-radius: 12px;
+}
+.plus {
+  width: 16px;
+  height: 16px;
+  background: url(../img/plus_btn.png);
+  position: absolute;
+  right: 11px;
+  top: 22px;
+}
+.list.fix .plus {
+  background: url(../img/del-btn.png);
+  width: 14px;
+  height: 14px;
+  right: 7px;
+  top: 22px;
+}
