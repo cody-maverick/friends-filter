@@ -15,29 +15,18 @@
 			<div class="friends-filter__close"></div>
 		</div>
 		<div class="friends-filter__filters">			
-			<input type="text" placeholder="Начните вводить имя друга">
-			<input type="text" placeholder="Начните вводить имя друга">
+			<input class="input" type="text" placeholder="Начните вводить имя друга">
+			<input class="input" type="text" placeholder="Начните вводить имя друга">
 		</div>
 		<div class="friends-filter__lists">
 			<div>
 				<h4>Ваши друзья</h4>
 				<ul id="vk-friends" class="list">
-					
 				</ul>				
 			</div>
 			<div>
 				<h4>Друзья в списке</h4>
-				<ul class="list fix">					
-					<li class="list__item">
-					  <div><img src="img/temp.png" alt=""></div>
-					  <div>Александра Панкратова</div>
-					  <div class="plus"></div>
-					</li>
-					<li class="list__item">
-					  <div><img src="img/temp.png" alt=""></div>
-					  <div>Александра Панкратова</div>
-					  <div class="plus"></div>
-					</li>
+				<ul class="list">
 				</ul>				
 			</div>
 					
@@ -47,15 +36,7 @@
 		</div>
 	</div>
 
-	<script id="user-template" type="text/x-handlebars-template">
-    {{#each items}}
-		<li class="list__item">
-			<div><img src="{{photo_50}}"></div>
-			<div>{{first_name}} {{last_name}}</div>
-			<div class="plus"></div>
-		</li>
-		{{/each}}
-	</script>
+
 
 	<script src="js/script.js"></script>
 </body>

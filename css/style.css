@@ -133,10 +133,22 @@ body {
   right: 11px;
   top: 22px;
 }
-.list.fix .plus {
+.delete {
   background: url(../img/del-btn.png);
   width: 14px;
   height: 14px;
+  position: absolute;
   right: 7px;
   top: 22px;
+}
+.plus:hover,
+.delete:hover {
+  cursor: pointer;
+}
+.plus:active,
+.delete:active {
+  transform: scale(1.1, 1.1);
+}
+.hidden {
+  display: none !important;
 }
