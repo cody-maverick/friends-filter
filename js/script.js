@@ -16,6 +16,7 @@ function auth() {
     });
 }
 
+
 // Аутентификация
 
 auth().then(() => console.log('ok'));
@@ -34,17 +35,19 @@ function callAPI(method, params) {
   });
 }
 
+
 // Шаблон
 
  const template = `
      {{#each items}}
-     <li class="list__item">
+     <li class="list__item" draggable="true">
      <div><img src="{{photo_50}}"></div>
      <div class="name">{{first_name}} {{last_name}}</div>
      <div class="plus"></div>
      </li>
      {{/each}}
     `;
+
 
 // Запрос списка друзей
 
@@ -53,11 +56,44 @@ auth()
     	 return callAPI('friends.get' , {fields: 'photo_50'});
     })
     .then(friends => {    	
-    	  const render = Handlebars.compile(template);
-    	  const renderFriends = render(friends);
-    	  const vkFriendsList = document.querySelector('#vk-friends');    	    	
-    	  vkFriendsList.innerHTML = renderFriends;
+          if (localStorage.stringifyB || localStorage.stringifyС) {
+              let parseB = JSON.parse(localStorage.stringifyB);
+              let parseC = JSON.parse(localStorage.stringifyC);
+
+              parseB.forEach((item) => {                
+                let fromLocalToDOM = `
+                  <li class="list__item" draggable="true">
+                  <div><img src="${item.photo}"></div>
+                  <div class="name">${item.name}</div>
+                  <div class="plus"></div>
+                  </li>
+                  `;
+                let vkFriendsList = document.querySelector('#vk-friends');    
+                vkFriendsList.innerHTML += fromLocalToDOM;
+              })
+
+              parseC.forEach((item) => {                
+                let fromLocalToDOM = `
+                  <li class="list__item" draggable="true">
+                  <div><img src="${item.photo}"></div>
+                  <div class="name">${item.name}</div>
+                  <div class="delete"></div>
+                  </li>
+                  `;
+                let vkFriendsList2 = document.querySelector('#vk-friends-choise');    
+                vkFriendsList2.innerHTML += fromLocalToDOM;
+              })
+             
+          }
+          else {
+              const render = Handlebars.compile(template);
+              const renderFriends = render(friends);
+              const vkFriendsList = document.querySelector('#vk-friends');              
+              vkFriendsList.innerHTML = renderFriends;
+          }
+    	  
     })
+
 
 // Добавление и удаление друзей из второго списка
 
@@ -80,6 +116,7 @@ lists.forEach((list) => {
     })  
 });
 
+
 // Cостветствие
 
 function isMatching(full, chunk) {
@@ -92,6 +129,7 @@ function isMatching(full, chunk) {
         return false;
     }
 }
+
 
 // Поиск по спискам
 
@@ -112,10 +150,111 @@ input[0].addEventListener('keyup', (e) => {
     })
 });
 
+input[1].addEventListener('keyup', (e) => {
+    let rightLis = document.querySelectorAll('#vk-friends-choise .list__item'), 
+        target = e.target;
+
+    rightLis.forEach((item) =>{
+        let name = item.children[1].outerText;
+
+        if ((isMatching(name, target.value))) {
+            item.classList.remove('hidden');
+        } else {
+            item.classList.add('hidden');
+        }
+    })
+});
 
 
+// DnD
+
+let uls = document.querySelectorAll('ul');
+
+makeDnD([uls[0], uls[1]]);
+
+function makeDnD(zones) {
+    let currentDrag;
+
+    zones.forEach((zone) => {
+        zone.addEventListener('dragstart', (e) => {
+            currentDrag = {source : zone, node: e.target};
+        });
+
+        zone.addEventListener('dragover', (e) => {
+            e.preventDefault();
+        });
+
+        zone.addEventListener('drop', (e) => {
+            if (currentDrag) {
+                e.preventDefault();               
+
+                if (currentDrag.source !== zone) {
+                    let switchClasses = currentDrag.node.lastElementChild.classList;
+
+                    if (switchClasses.contains('plus')) {
+                        switchClasses.add('delete');
+                        switchClasses.remove('plus');
+                    } else {
+                        switchClasses.add('plus');
+                        switchClasses.remove('delete');
+                    }                      
+
+                    if (e.target.classList.contains('list__item')) {                       
+                        zone.insertBefore(currentDrag.node, e.target.nextElementSibling);
+                    } else {
+                        zone.insertBefore(currentDrag.node, zone.lastElementChild);
+                    }
+                }
+            }
+
+            currentDrag = null;
+        });
+    })
+}
 
 
+//  Cохранение списков в localStorage 
+
+let saveLists = document.querySelector('.save_button');
+
+saveLists.addEventListener('click', (e) => {
+
+    let childrenList = lists[0].children;
+    let arrList = Array.from(childrenList); 
+    var b = [];
+
+    arrList.forEach((item => {        
+        let a = {
+            name: item.innerText,
+            photo: item.children[0].childNodes[0].currentSrc
+        };
+
+        b.push(a);
+
+        return b;  
+    }))   
+
+    let stringifyB = JSON.stringify(b);
+
+    localStorage.setItem('stringifyB', stringifyB);
 
 
+    let childrenList1 = lists[1].children;
+    let arrList1 = Array.from(childrenList1); 
+    var c = [];
 
+    arrList1.forEach((item => {        
+        let z = {
+            name: item.innerText,
+            photo: item.children[0].childNodes[0].currentSrc
+        };
+
+        c.push(z);
+
+        return c;  
+    }))   
+
+    let stringifyC = JSON.stringify(c);
+
+    localStorage.setItem('stringifyC', stringifyC);
+});
