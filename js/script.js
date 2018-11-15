@@ -217,44 +217,37 @@ function makeDnD(zones) {
 
 let saveLists = document.querySelector('.save_button');
 
-saveLists.addEventListener('click', (e) => {
 
-    let childrenList = lists[0].children;
-    let arrList = Array.from(childrenList); 
+function stringifyJson(list) {
+    let childrenList = list.children;   
+    let arrList = Array.from(childrenList);
     var b = [];
 
-    arrList.forEach((item => {        
+    arrList.forEach((item) => {        
         let a = {
             name: item.innerText,
             photo: item.children[0].childNodes[0].currentSrc
         };
 
         b.push(a);
-
-        return b;  
-    }))   
+          
+    });
 
     let stringifyB = JSON.stringify(b);
 
-    localStorage.setItem('stringifyB', stringifyB);
+    return stringifyB;       
+}
 
-
-    let childrenList1 = lists[1].children;
-    let arrList1 = Array.from(childrenList1); 
-    var c = [];
-
-    arrList1.forEach((item => {        
-        let z = {
-            name: item.innerText,
-            photo: item.children[0].childNodes[0].currentSrc
-        };
-
-        c.push(z);
-
-        return c;  
-    }))   
-
-    let stringifyC = JSON.stringify(c);
-
-    localStorage.setItem('stringifyC', stringifyC);
+saveLists.addEventListener('click', (e) => {   
+    e.preventDefault();
+    lists.forEach((item,i,lists) => {       
+        if (item.id === 'vk-friends') {
+            let stringifyB = stringifyJson(item);
+            localStorage.setItem('stringifyB', stringifyB);
+        }        
+        if (item.id === 'vk-friends-choise') {
+            let stringifyC = stringifyJson(item);
+            localStorage.setItem('stringifyC', stringifyC);
+        }      
+    });
 });
